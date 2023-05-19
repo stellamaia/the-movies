@@ -4,7 +4,7 @@
 
     <div
       id="carouselExampleInterval"
-      class="carousel slide"
+      class="carousel slide  carousel-img-desktop"
       data-bs-ride="carousel"
     >
       <div class="carousel-indicators">
@@ -33,13 +33,16 @@
       </div>
 
       <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="3000">
+        <div
+          class="carousel-item active "
+          data-bs-interval="3000"
+        >
           <img src="../assets/got.webp" class="d-block w-100" alt="..." />
         </div>
-        <div class="carousel-item" data-bs-interval="3000">
+        <div class="carousel-item " data-bs-interval="3000">
           <img src="../assets/tlou.jpg" class="d-block w-100" alt="..." />
         </div>
-        <div class="carousel-item" data-bs-interval="3000">
+        <div class="carousel-item " data-bs-interval="3000">
           <img
             src="../assets/succession.jpeg"
             class="d-block w-100"
@@ -48,6 +51,9 @@
         </div>
       </div>
     </div>
+
+  
+  
   </div>
 </template>
 
@@ -66,6 +72,11 @@ export default {
 };
 </script>
 <style scoped>
+.home {
+  /* background-image: linear-gradient(to bottom, #030328, #010108); */
+  background-image: linear-gradient(to right bottom, #030328 60%, #5c0b5b 170%);
+  height: 100vh;
+}
 .button-one,
 .button-two,
 .button-three {
@@ -73,7 +84,12 @@ export default {
   height: 15px;
   width: 15px;
 }
-.carousel-item{
-height: 100%;
+.carousel-item {
+  height: 100%;
+}
+@media screen and (max-width: 768px) {
+.carousel-img-desktop{
+    display: none;
+  }
 }
 </style>
