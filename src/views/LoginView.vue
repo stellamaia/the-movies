@@ -89,7 +89,7 @@
             </div>
           </form>
           <div class="row modal-footer-btn">
-            <div class="modal-footer col-12 col-sm-6 md-6 ">
+            <div class="modal-footer col-12 col-sm-6 md-6">
               <button
                 class="btn-enter-modal"
                 data-bs-target="#exampleModalToggle2"
@@ -98,7 +98,7 @@
                 Send
               </button>
             </div>
-            <div class="modal-footer col-12  col-sm-6 md-6">
+            <div class="modal-footer col-12 col-sm-6 md-6">
               <button
                 type="button"
                 class="btn-close-modal"
@@ -212,7 +212,6 @@ export default {
 }
 .form-control:focus {
   background-color: rgba(55, 187, 92, 0.656);
-
 }
 .form-control::placeholder {
   color: white;
@@ -308,7 +307,6 @@ export default {
   // .container-login {
   //   margin: 100px 300px 300px 300px;
   // }
-  
 }
 
 @media screen and (min-width: 1800px) {
@@ -330,7 +328,6 @@ export default {
 .modal-footer {
   border: none;
   // justify-content: center;
- 
 }
 .modal-body {
   color: white;
@@ -346,21 +343,18 @@ export default {
   border: none;
   color: white;
   border-radius: 5px;
-
   background-color: rgba(255, 255, 255, 0.05);
 }
 .btn-close-modal {
   color: white;
   border: none;
   border-radius: 5px;
-
   background-color: rgba(255, 255, 255, 0.05);
-  &.white{
-    color:rgb(16, 16, 15); ;
-background-color: white;
-font-weight: bold;
-text-transform: uppercase;
-
+  &.white {
+    color: rgb(16, 16, 15);
+    background-color: white;
+    font-weight: bold;
+    text-transform: uppercase;
   }
 }
 </style>
