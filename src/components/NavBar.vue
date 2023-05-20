@@ -1,8 +1,6 @@
 <template>
   <div class="nav-bar-component">
-    <nav class="navbar  fixed-top container-nav">
-    
-
+    <nav class="navbar fixed-top container-nav">
       <button
         class="navbar-toggler"
         type="button"
@@ -39,13 +37,9 @@
         </div>
       </div>
 
-
-
-
       <router-link class="icon" to="/login">
         <i class="material-symbols-outlined icon person">person</i>
       </router-link>
- 
     </nav>
   </div>
 </template>
@@ -65,7 +59,6 @@ export default {
 }
 .container-nav {
   padding: 15px;
-
 }
 .menu {
   color: white;
@@ -88,5 +81,4 @@ export default {
 .offcanvas.offcanvas-start {
   width: 40%;
 }
-
 </style>
