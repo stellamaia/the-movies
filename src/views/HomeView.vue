@@ -48,10 +48,7 @@
         </div>
       </div>
     </div>
-    <div
-      :style="search ? {} : { height: '100vh' }"
-      class="stellinha"
-    >
+    <div :style="search ? {} : { height: '100vh' }" class="stellinha">
       <form class="d-flex" @submit.prevent="getMovie" role="search">
         <input
           id="input-1"
@@ -81,9 +78,6 @@
             :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
             alt="Movie Poster"
           />
-          <button @click="addToFavorites(movie)" class="btn-favorite">
-            Add to Favorites
-          </button>
         </div>
       </div>
     </div>
@@ -105,7 +99,41 @@
             >
               {{ movie.title }}
             </h1>
-            <i style="background-color: red" class="material-symbols-outlined">favorite</i>
+
+            <span
+              v-if="!isClicked"
+              class="btn-favorite"
+              type="button"
+              @click="addToFavorites(movie)"
+            >
+              <img
+                src="../assets/favorite.svg"
+                alt="icon favorite background"
+              />
+            </span>
+
+            <span v-else>
+              <svg
+                id="heart-svg"
+                height="40"
+                width="40"
+                viewBox="467 392 58 57"
+                xmlns="http://www.w3.org/2000/svg"
+                @click="removeFromFavorites(movie)"
+              >
+                <g
+                  id="Group"
+                  fill-rule="evenodd"
+                  transform="translate(467 392)"
+                >
+                  <path
+                    d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z"
+                    id="heart"
+                    fill="red"
+                  />
+                </g>
+              </svg>
+            </span>
 
             <button
               type="button"
@@ -172,6 +200,7 @@ export default {
   data() {
     return {
       search: "",
+      isClicked: false,
       movie: {
         adult: true,
         posterPath: false,
@@ -215,6 +244,16 @@ export default {
       favorites.push(movie);
 
       localStorage.setItem("favorites", JSON.stringify(favorites));
+      this.isClicked = !this.isClicked;
+      // Adicionar lógica aqui para adicionar ou remover dos favoritos
+    },
+    removeFromFavorites(movie) {
+      this.isClicked = false;
+      // Lógica para remover dos favoritos
+      // Exemplo: Remover do localStorage
+      const favorites = JSON.parse(localStorage.getItem("favorites"));
+      const updatedFavorites = favorites.filter((fav) => fav.id !== movie.id);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     },
   },
 };
@@ -351,4 +390,19 @@ export default {
   padding-left: 10px;
   cursor: pointer;
 }
+//heart
+#heart-svg {
+  transform-origin: center;
+  animation: animateHeartOut-9ea40744 0.3s linear forwards;
+}
+
+@keyframes animateHeartOut-9ea40744 {
+  0% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>
+

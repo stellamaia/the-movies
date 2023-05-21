@@ -2,7 +2,7 @@
   <div class="nav-bar-component">
     <nav class="navbar fixed-top container-nav">
       <button
-      @click="showFavorites()"
+        @click="showFavorites()"
         class="navbar-toggler"
         type="button"
         data-bs-toggle="offcanvas"
@@ -20,27 +20,28 @@
         aria-labelledby="offcanvasNavbarLabel"
       >
         <div class="offcanvas-header">
-         
           <button
             type="button"
             class="btn-close"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
-          
           ></button>
-     
         </div>
         <div class="offcanvas-body">
-          <p>Favorites</p>
-          {{ favorites }}
-       
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <p class="title-favorite">Favorites</p>
+
+          <ul class="navbar-nav justify-content-end flex-grow-1">
             <li
               class="nav-item"
               v-for="favorite in favorites"
               :key="favorite.id"
             >
-              {{ favorite.title }}
+              <p class="favorite-movies-title">{{ favorite.title }}</p>
+              <img
+                class="card-poster-favorite"
+                :src="'https://image.tmdb.org/t/p/w500/' + favorite.poster_path"
+                alt="Movie Poster Favorite"
+              />
             </li>
           </ul>
         </div>
@@ -66,9 +67,7 @@ export default {
     msg: String,
   },
   methods: {
-
     showFavorites() {
-   
       //Obtém a lista de favoritos do LocalStorage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       this.favorites = favorites;
@@ -105,5 +104,24 @@ export default {
 }
 .offcanvas.offcanvas-start {
   width: 40%;
+}
+.card-poster-favorite {
+  width: 500px;
+}
+.title-favorite {
+  font-weight: 600;
+  font-size: 20px;
+}
+.favorite-movies-title {
+  padding-bottom: 10px;
+  margin: 0;
+}
+@media screen and (max-width: 480px) {
+  .offcanvas.offcanvas-start {
+    width: 50%;
+  }
+  .card-poster-favorite {
+    width: 150px;
+  }
 }
 </style>
