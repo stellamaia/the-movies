@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <NavBar />
 
     <div
@@ -48,53 +48,65 @@
         </div>
       </div>
     </div>
-
-    <form class="d-flex mt-3" @submit.prevent="getMovie" role="search">
-      <input
-        id="input-1"
-        v-model="search"
-        class="search-input me-2"
-        type="search"
-        placeholder="What are you looking for?"
-        aria-label="Search"
-        required
-      />
-      <button class="btn-search" type="submit">Search</button>
-    </form>
-   
-
-    <div style="margin: 0">
-      <div
-        class="movie mb-4"
-        v-for="movie in movie.results"
-        :key="movie.id"
-        data-target="#exampleModalLong"
-      >
-       <img
-          data-bs-target="#exampleModalToggle"
-          data-bs-toggle="modal"
-          class="card-poster"
-          :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
-          alt="Movie Poster"
+    <div
+      :style="search ? {} : { height: '100vh' }"
+      class="stellinha"
+    >
+      <form class="d-flex" @submit.prevent="getMovie" role="search">
+        <input
+          id="input-1"
+          v-model="search"
+          class="search-input"
+          type="search"
+          placeholder="What are you looking for?"
+          aria-label="Search"
         />
+        <button class="btn-search" type="submit">
+          <i class="material-symbols-outlined">Search</i>
+        </button>
+      </form>
+
+      <div style="margin: 0" class="stellinha">
+        <div
+          class="movie mb-4"
+          v-for="movie in movie.results"
+          :key="movie.id"
+          :data-bs-target="'#exampleModalToggle-' + movie.id"
+        >
+          <img
+            v-if="movie.poster_path"
+            :data-bs-target="'#exampleModalToggle-' + movie.id"
+            data-bs-toggle="modal"
+            class="card-poster"
+            :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+            alt="Movie Poster"
+          />
+          <button @click="addToFavorites(movie)" class="btn-favorite">
+            Add to Favorites
+          </button>
+        </div>
       </div>
     </div>
-
     <div
       v-for="movie in movie.results"
       :key="movie.id"
       class="modal fade"
-      id="exampleModalToggle"
+      :id="'exampleModalToggle-' + movie.id"
       aria-hidden="true"
-      aria-labelledby="exampleModalToggleLabel"
+      :aria-labelledby="'exampleModalToggleLabel-' + movie.id"
       tabindex="-1"
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
+            <h1
+              class="modal-title fs-5"
+              :id="'exampleModalToggleLabel-' + movie.id"
+            >
               {{ movie.title }}
             </h1>
+            <i style="background-color: red" class="material-symbols-outlined">favorite</i>
+
             <button
               type="button"
               class="icon-close"
@@ -110,17 +122,43 @@
               :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
               alt="Movie Poster"
             />
-            <span> Language: <p>{{ movie.original_language }}</p></span>
-            <span>Data de lançamento: <p>{{ movie.release_date }}</p></span>
-            <span>Vote average: <p>{{ movie.vote_average }}</p></span>
-            <span>Vote count: <p>{{ movie.vote_count }}</p></span>
-            <span>Overview: <p>{{ movie.overview }}</p></span>
+            <div class="content-details">
+              <span v-if="movie.adult" class="information"
+                >Content:
+                <p class="information films">Adult</p></span
+              >
+              <span v-else class="information"
+                >Content:
+                <p class="information films">Not Adult</p></span
+              >
+
+              <span class="information"
+                >Language:
+                <p class="information films">
+                  {{ movie.original_language }}
+                </p></span
+              >
+              <span class="information"
+                >Release date:
+                <p class="information films">{{ movie.release_date }}</p></span
+              >
+              <span class="information">
+                Vote average:
+                <p class="information films">{{ movie.vote_average }}</p>
+              </span>
+              <span class="information"
+                >Vote count:
+                <p class="information films">{{ movie.vote_count }}</p></span
+              >
+              <span class="information">Overview:</span>
+              <p class="information overview">{{ movie.overview }}</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- {{ movie.results }} -->
+    <!-- {{ movie.results }}  -->
   </div>
 </template>
 
@@ -134,7 +172,10 @@ export default {
   data() {
     return {
       search: "",
-      movie: [],
+      movie: {
+        adult: true,
+        posterPath: false,
+      },
     };
   },
   components: {
@@ -152,22 +193,36 @@ export default {
         .then((res) => {
           this.movie = res.data;
           this.search = "";
-          if (this.movie.poster_path === null) {
-            this.movie.poster_path = "";
-          }
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    addToFavorites(movie) {
+      //criar variavel
+      // Obtém a lista de favoritos do LocalStorage ou inicializa como um array vazio
+      let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      // verifica se o filme já está na lista de favoritos
+      const existingMovie = favorites.find(
+        (favMovie) => favMovie.id === movie.id
+      );
+      //se existe, retorna
+      if (existingMovie) {
+        return;
+      }
+
+      // Adiciona o filme à lista de favoritos
+      favorites.push(movie);
+
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
-.home {
-  /* background-image: linear-gradient(to bottom, #030328, #010108); */
+.home,
+.stellinha {
   background-image: linear-gradient(to right bottom, #030328 60%, #5c0b5b 170%);
-  /* height: 100vh; */
 }
 .button-one,
 .button-two,
@@ -187,12 +242,12 @@ export default {
 
 .search-input {
   outline: none;
-  border-radius: 6px;
+  border-radius: 6px 0 0 6px;
   width: 100%;
   border: none;
   color: white;
   padding: 20px;
-  margin: 20px;
+  margin: 20px 0 0 20px;
   margin-bottom: 30px;
   background-color: rgba(255, 255, 255, 0.05);
 }
@@ -204,11 +259,11 @@ export default {
 .btn-search {
   border: none;
   color: white;
-  border-radius: 5px;
-  height: 60px;
+  height: 64px;
+  border-radius: 0 6px 6px 0;
   width: 130px;
-  margin: 20px;
-  background-color: rgba(255, 255, 255, 0.05);
+  margin: 20px 20px 0 0;
+  background-color: rgba(255, 255, 255, 0.101);
 }
 
 .card-poster {
@@ -223,14 +278,15 @@ export default {
 }
 .modal-content {
   background-color: rgb(16 16 15);
-  padding: 25px;
 }
 .modal-title {
   color: white;
+  text-align: center;
 }
 .modal-header {
   border: none;
-  padding: 0 0 20px 0;
+  padding: 40px 0 0 0;
+  justify-content: center;
 }
 .modal-footer {
   border: none;
@@ -239,14 +295,60 @@ export default {
 .modal-body {
   color: white;
   text-align: start;
-  padding: 0 0 20px 0;
+  padding: 25px;
 }
 .icon-close {
   color: white;
   border: none;
   background-color: rgba(255, 0, 0, 0);
+  top: 8px;
+  right: 4px;
+  position: absolute;
 }
 .img-modal {
   width: 100%;
+}
+.content-details {
+  padding-top: 40px;
+}
+.information {
+  display: flex;
+  font-weight: 600;
+  &.films {
+    padding-left: 6px;
+    font-weight: 300;
+  }
+  &.overview {
+    padding-top: 10px;
+    font-weight: 300;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .search-input::placeholder {
+    font-size: 17px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .search-input::placeholder {
+  }
+}
+// .icon-favorite{
+//   color: rgb(119, 0, 255);
+// //   padding-left: 10px;
+// //   cursor: pointer;
+// }
+
+.icon-favorite {
+  background: linear-gradient(to right, #2d50cf, #732be7);
+}
+.icon-favorite:hover {
+  background: linear-gradient(to right, #2d50cf, #732be7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  padding-left: 10px;
+  cursor: pointer;
 }
 </style>

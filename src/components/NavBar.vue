@@ -2,6 +2,7 @@
   <div class="nav-bar-component">
     <nav class="navbar fixed-top container-nav">
       <button
+      @click="showFavorites()"
         class="navbar-toggler"
         type="button"
         data-bs-toggle="offcanvas"
@@ -19,19 +20,27 @@
         aria-labelledby="offcanvasNavbarLabel"
       >
         <div class="offcanvas-header">
+         
           <button
             type="button"
             class="btn-close"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
+          
           ></button>
+     
         </div>
         <div class="offcanvas-body">
+          <p>Favorites</p>
+          {{ favorites }}
+       
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
-                >favoritos</a
-              >
+            <li
+              class="nav-item"
+              v-for="favorite in favorites"
+              :key="favorite.id"
+            >
+              {{ favorite.title }}
             </li>
           </ul>
         </div>
@@ -47,8 +56,24 @@
 <script>
 export default {
   name: "NavBar",
+
+  data() {
+    return {
+      favorites: [],
+    };
+  },
   props: {
     msg: String,
+  },
+  methods: {
+
+    showFavorites() {
+   
+      //Obtém a lista de favoritos do LocalStorage
+      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      this.favorites = favorites;
+      console.log(this.favorites);
+    },
   },
 };
 </script>
