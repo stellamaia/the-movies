@@ -1,8 +1,13 @@
-<template>
-  <div>
+<template  >
+  <div style="height: 100vh" class="stellinha">
+<!-- 
+    div class="stellinha" :style="!search || search ?  { height: '100vh' } : { height: '0'}"> -->
+<!-- 
+    :style="search ? {} : { height: '100vh' }"  -->
+  <div >
     <NavBar />
 
-    <div
+    <!-- <div
       id="carouselExampleInterval"
       class="carousel slide carousel-img-desktop"
       data-bs-ride="carousel"
@@ -47,10 +52,12 @@
           />
         </div>
       </div>
-    </div>
-    <div :style="search ? {} : { height: '100vh' }" class="stellinha">
-      <form class="d-flex" @submit.prevent="getMovie" role="search">
+    </div> -->
+    <!-- :style="search ? {} : { height: '100vh' }"  -->
+   <div > 
+      <form style="padding-top: 30px;" class="d-flex " @submit.prevent="getMovie" role="search">
         <input
+      
           id="input-1"
           v-model="search"
           class="search-input"
@@ -63,9 +70,9 @@
         </button>
       </form>
 
-      <div style="margin: 0" class="stellinha">
+      <div style="margin: 0" class="stellinha" >
         <div
-          class="movie mb-4"
+          class="movie mb-4 "
           v-for="movie in movie.results"
           :key="movie.id"
           :data-bs-target="'#exampleModalToggle-' + movie.id"
@@ -81,6 +88,8 @@
         </div>
       </div>
     </div>
+
+
     <div
       v-for="movie in movie.results"
       :key="movie.id"
@@ -100,7 +109,9 @@
               {{ movie.title }}
             </h1>
 
-            <span
+<!-- tella -->
+<!-- <FavoriteComponent /> -->
+        <span
               v-if="!isClicked"
               class="btn-favorite"
               type="button"
@@ -114,6 +125,7 @@
 
             <span v-else>
               <svg
+                style="cursor: pointer"
                 id="heart-svg"
                 height="40"
                 width="40"
@@ -142,8 +154,10 @@
               aria-label="Close"
             >
               <i class="material-symbols-outlined">close</i>
-            </button>
+     </button>  
+   <!-- //stella  -->
           </div>
+ 
           <div class="modal-body">
             <img
               class="img-modal"
@@ -188,11 +202,13 @@
 
     <!-- {{ movie.results }}  -->
   </div>
+</div>
 </template>
 
 <script>
-// @ is an alias to /src
+
 import NavBar from "@/components/NavBar.vue";
+// import FavoriteComponent from "@/components/FavoriteComponent.vue";
 import axios from "axios";
 
 export default {
@@ -222,6 +238,7 @@ export default {
         .then((res) => {
           this.movie = res.data;
           this.search = "";
+          
         })
         .catch((error) => {
           console.log(error);
@@ -239,10 +256,8 @@ export default {
       if (existingMovie) {
         return;
       }
-
       // Adiciona o filme à lista de favoritos
       favorites.push(movie);
-
       localStorage.setItem("favorites", JSON.stringify(favorites));
       this.isClicked = !this.isClicked;
       // Adicionar lógica aqui para adicionar ou remover dos favoritos
@@ -262,6 +277,7 @@ export default {
 .home,
 .stellinha {
   background-image: linear-gradient(to right bottom, #030328 60%, #5c0b5b 170%);
+
 }
 .button-one,
 .button-two,
@@ -336,14 +352,14 @@ export default {
   text-align: start;
   padding: 25px;
 }
-.icon-close {
-  color: white;
-  border: none;
-  background-color: rgba(255, 0, 0, 0);
-  top: 8px;
-  right: 4px;
-  position: absolute;
-}
+ .icon-close {
+   color: white;
+   border: none;
+   background-color: rgba(255, 0, 0, 0);
+   top: 8px;
+   right: 4px;
+   position: absolute;
+ }
 .img-modal {
   width: 100%;
 }
@@ -369,15 +385,20 @@ export default {
   }
 }
 
-@media screen and (min-width: 481px) and (max-width: 768px) {
-  .search-input::placeholder {
-  }
-}
-// .icon-favorite{
-//   color: rgb(119, 0, 255);
-// //   padding-left: 10px;
-// //   cursor: pointer;
+// @media screen and (min-width: 481px) and (max-width: 768px) {
+//   .search-input::placeholder {
+//   }
+//   .stellinha{
+//   height: 100%;
 // }
+// }
+
+// @media screen and  (min-width: 769px) and (max-width: 1600px) {
+// .stellinha{
+//   height: 90vh;
+// }
+// }
+
 
 .icon-favorite {
   background: linear-gradient(to right, #2d50cf, #732be7);
@@ -403,6 +424,7 @@ export default {
   100% {
     transform: scale(1);
   }
+
 }
 </style>
 

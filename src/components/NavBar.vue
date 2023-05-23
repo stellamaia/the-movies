@@ -3,7 +3,7 @@
     <nav class="navbar fixed-top container-nav">
       <button
         @click="showFavorites()"
-        class="navbar-toggler"
+        class="navbar-toggler-menu"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasNavbar"
@@ -71,13 +71,13 @@ export default {
       //Obtém a lista de favoritos do LocalStorage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       this.favorites = favorites;
-      console.log(this.favorites);
+      // console.log(this.favorites);
     },
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .nav-bar-component {
   background-color: #030328;
 }
@@ -102,12 +102,8 @@ export default {
     padding-top: 3px;
   }
 }
-.offcanvas.offcanvas-start {
-  width: 40%;
-}
-.card-poster-favorite {
-  width: 500px;
-}
+
+
 .title-favorite {
   font-weight: 600;
   font-size: 20px;
@@ -116,12 +112,44 @@ export default {
   padding-bottom: 10px;
   margin: 0;
 }
+.card-poster-favorite {
+    width: 60%;
+  }
+  .offcanvas.offcanvas-start {
+  width: 20%;
+}
 @media screen and (max-width: 480px) {
   .offcanvas.offcanvas-start {
-    width: 50%;
+    width: 60%;
   }
   .card-poster-favorite {
-    width: 150px;
+    width: 100%;
   }
+}
+.navbar-toggler-menu{
+  border: none;
+  background-color: transparent;
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .offcanvas.offcanvas-start {
+    width: 40%;
+  }
+  .card-poster-favorite {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .offcanvas.offcanvas-start {
+  width: 30%;
+}
+.card-poster-favorite {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 1025px) and (max-width: 1200px) {
+
+}
+@media screen and (min-width: 1201px) {
 }
 </style>

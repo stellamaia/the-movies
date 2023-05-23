@@ -15,7 +15,7 @@
           <div>
             <input
               type="email"
-              class="form-control"
+              class="form-control-email"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Endereço de e-mail"
@@ -24,17 +24,17 @@
           <div>
             <input
               type="password"
-              class="form-control"
+              class="form-control-password"
               id="exampleInputPassword1"
               placeholder="senha"
             />
           </div>
 
           <div class="row">
-            <div class="col md-6 lg-4 btn-login">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 btn-login">
               <button class="btn-login enter">Enter</button>
             </div>
-            <div class="col md-6 lg-4">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
               <div class="forgot-password">
                 <p
                   data-bs-target="#exampleModalToggle"
@@ -81,7 +81,7 @@
             <div>
               <input
                 type="email"
-                class="form-control"
+                class="form-control-email"
                 id="exampleInputEmail2"
                 aria-describedby="emailHelp"
                 placeholder="Endereço de e-mail"
@@ -89,7 +89,7 @@
             </div>
           </form>
           <div class="row modal-footer-btn">
-            <div class="modal-footer col-12 col-sm-6 md-6">
+            <div class="modal-footer col-12 col-sm-6 col-md-4 col-lg-4">
               <button
                 class="btn-enter-modal"
                 data-bs-target="#exampleModalToggle2"
@@ -98,7 +98,7 @@
                 Send
               </button>
             </div>
-            <div class="modal-footer col-12 col-sm-6 md-6">
+            <div class="modal-footer col-12 col-sm-6 col-md-4 col-mlg-4">
               <button
                 type="button"
                 class="btn-close-modal"
@@ -174,6 +174,7 @@ export default {
 
   &.return {
     font-size: 50px;
+    padding: 20px;
   }
 }
 .login-title {
@@ -203,23 +204,27 @@ export default {
   padding-bottom: 30px;
 }
 
-.form-control {
+.form-control-email,
+.form-control-password {
   background-color: rgba(187, 55, 55, 0);
   border: 1.5px solid rgba(193, 193, 193, 0.579);
   color: white;
   padding: 20px;
   margin-bottom: 30px;
+  outline: none;
+  border-radius: 5px;
+  width: 100%;
 }
-.form-control:focus {
-  background-color: rgba(55, 187, 92, 0.656);
-}
-.form-control::placeholder {
-  color: white;
-}
-.form-control:focus {
+.form-control-email:focus,
+.form-control-password:focus {
   background-color: rgba(187, 55, 55, 0);
   border: 1.5px solid rgba(96, 50, 170, 0.579);
 }
+.form-control-email::placeholder,
+.form-control-password::placeholder {
+  color: white;
+}
+
 .content-btn {
   display: flex;
   justify-self: start;
@@ -241,14 +246,30 @@ export default {
   text-decoration: none;
   &.question {
     margin: 70px 0 0 0;
+    cursor: pointer;
   }
 }
 
+.btn-enter-modal,
+.btn-close-modal {
+  height: 50px;
+  width: 100%;
+  font-weight: bold;
+  
+}
+
+.container-login {
+  background-color: rgba(221, 221, 221, 0.06);
+  padding: 20px;
+  border-radius: 10px;
+}
+.modal-footer {
+ 
+    padding: 0;
+  }
 @media screen and (max-width: 480px) {
   .container-login {
-    margin: 0px;
-    padding: 0px;
-    border-radius: 10px;
+    background-color: rgba(255, 0, 0, 0) !important;
   }
   .question-account {
     padding: 0 0 30px 0;
@@ -257,63 +278,53 @@ export default {
   .btn-login {
     margin: 0;
   }
-  .forgot-password.question {
-    margin: 30px 0 0 0;
-  }
 
   .forgot-password {
     &.question {
-      margin: 15px 0 0 0;
+      margin: 30px 0 0 0;
+      cursor: pointer;
       font-size: 15px;
     }
   }
-  .btn-enter-modal,
-  .btn-close-modal {
-    height: 50px;
-    width: 100%;
-    font-weight: bold;
+
+  .modal-footer {
+    justify-content: center;
+    padding: 0;
   }
+
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 481px) and (max-width: 768px) {
+ 
   .container-login {
-    background-color: rgba(221, 221, 221, 0.06);
-
+    background-color: rgba(255, 0, 0, 0) !important;
     padding: 20px;
     border-radius: 10px;
   }
+
   .btn-enter-modal,
   .btn-close-modal {
     height: 50px;
     width: 100%;
   }
-}
-@media screen and (max-width: 1024px) {
-  // .container-login {
-  //   margin: 100px 200px 200px 200px;
-  //    background-color: rgba(221, 221, 221, 0.06); }
-  // .container-login {
-  // border-radius: 10px;
-  // padding: 35px;
-  // width: 60%;
-  .btn-enter-modal,
-  .btn-close-modal {
-    height: 50px;
-    width: 60%;
+  .btn-login {
+    margin-top: 10px;
+  }
+  .forgot-password {
+    &.question {
+      margin: 34px 0 0 0;
+      font-size: 15px;
+    }
   }
 }
+@media screen and (min-width: 769px) and (max-width: 1024px) {
 
-@media screen and (max-width: 1280px) {
-  // .container-login {
-  //   margin: 100px 300px 300px 300px;
-  // }
+}
+@media screen and (min-width: 1025px) and (max-width: 1200px) {
+}
+@media screen and (min-width: 1201px) {
 }
 
-@media screen and (min-width: 1800px) {
-  // .container-login {
-  //   margin: 100px 400px 400px 400px;
-  // }
-}
 .modal-content {
   background-color: rgb(16 16 15);
   padding: 25px;
@@ -355,6 +366,7 @@ export default {
     background-color: white;
     font-weight: bold;
     text-transform: uppercase;
+   
   }
 }
 </style>
