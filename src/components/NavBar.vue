@@ -37,6 +37,7 @@
               :key="favorite.id"
             >
               <p class="favorite-movies-title">{{ favorite.title }}</p>
+              <Favorite />
               <img
                 class="card-poster-favorite"
                 :src="'https://image.tmdb.org/t/p/w500/' + favorite.poster_path"
@@ -55,12 +56,15 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "NavBar",
 
   data() {
     return {
       favorites: [],
+      movieList: [],
     };
   },
   props: {
@@ -72,6 +76,20 @@ export default {
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       this.favorites = favorites;
       // console.log(this.favorites);
+    },
+    getMovie() {
+      const apiKey = "c78faf8ccc0cf08a8c233cdb9fc3b51b";
+      axios
+        .get(
+          `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${this.search}`
+        )
+
+        .then((res) => {
+          this.movieList = res.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
@@ -103,7 +121,6 @@ export default {
   }
 }
 
-
 .title-favorite {
   font-weight: 600;
   font-size: 20px;
@@ -113,9 +130,9 @@ export default {
   margin: 0;
 }
 .card-poster-favorite {
-    width: 60%;
-  }
-  .offcanvas.offcanvas-start {
+  width: 60%;
+}
+.offcanvas.offcanvas-start {
   width: 20%;
 }
 @media screen and (max-width: 480px) {
@@ -126,7 +143,7 @@ export default {
     width: 100%;
   }
 }
-.navbar-toggler-menu{
+.navbar-toggler-menu {
   border: none;
   background-color: transparent;
 }
@@ -141,14 +158,13 @@ export default {
 }
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .offcanvas.offcanvas-start {
-  width: 30%;
-}
-.card-poster-favorite {
+    width: 30%;
+  }
+  .card-poster-favorite {
     width: 100%;
   }
 }
 @media screen and (min-width: 1025px) and (max-width: 1200px) {
-
 }
 @media screen and (min-width: 1201px) {
 }
