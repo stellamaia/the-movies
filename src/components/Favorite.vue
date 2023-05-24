@@ -1,4 +1,4 @@
- <!-- <template>
+<template>
   <div>
     <span
       v-if="!isClicked"
@@ -40,7 +40,7 @@
 </template> 
 
 <script>
-import axios from "axios";
+
 
 export default {
   name: "FavoriteComponent",
@@ -48,16 +48,11 @@ export default {
     return {
       isClicked: false,
       favorites: [],
-      movie: {
-        adult: true,
-        posterPath: false,
-      },
+      movieList: []
     };
   },
   methods: {
-    getMovie() {
-      axios
-    },
+   
     showFavorites() {
       //Obtém a lista de favoritos do LocalStorage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -102,4 +97,4 @@ export default {
   right: 4px;
   position: absolute;
 }
-</style>   -->
+</style>
