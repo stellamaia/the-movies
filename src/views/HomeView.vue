@@ -1,214 +1,186 @@
-<template  >
-  <div style="height: 100vh" class="stellinha">
-<!-- 
-    div class="stellinha" :style="!search || search ?  { height: '100vh' } : { height: '0'}"> -->
-<!-- 
-    :style="search ? {} : { height: '100vh' }"  -->
-  <div >
-    <NavBar />
+<template>
+  <div
+    class="container-app "
+    :style="!movieList.length ? { height: '100vh' } : { height: '100%' }"
+  >
+    <div>
+      <NavBar />
 
-    <!-- <div
-      id="carouselExampleInterval"
-      class="carousel slide carousel-img-desktop"
-      data-bs-ride="carousel"
-    >
-      <div class="carousel-indicators">
-        <button
-          type="button"
-          data-bs-target="#carouselExampleInterval"
-          data-bs-slide-to="0"
-          class="active button-one"
-          aria-current="true"
-          aria-label="Slide 1"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleInterval"
-          data-bs-slide-to="1"
-          class="button-two"
-          aria-label="Slide 2"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleInterval"
-          data-bs-slide-to="2"
-          class="button-three"
-          aria-label="Slide 3"
-        ></button>
-      </div>
-
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="3000">
-          <img src="../assets/got.webp" class="d-block w-100" alt="..." />
+      <div
+        id="carouselExampleInterval"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#carouselExampleInterval"
+            data-bs-slide-to="0"
+            class="active button-one"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleInterval"
+            data-bs-slide-to="1"
+            class="button-two"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleInterval"
+            data-bs-slide-to="2"
+            class="button-three"
+            aria-label="Slide 3"
+          ></button>
         </div>
-        <div class="carousel-item" data-bs-interval="3000">
-          <img src="../assets/tlou.jpg" class="d-block w-100" alt="..." />
-        </div>
-        <div class="carousel-item" data-bs-interval="3000">
-          <img
-            src="../assets/succession.jpeg"
-            class="d-block w-100"
-            alt="..."
-          />
-        </div>
-      </div>
-    </div> -->
-    <!-- :style="search ? {} : { height: '100vh' }"  -->
-   <div > 
-      <form style="padding-top: 30px;" class="d-flex " @submit.prevent="getMovie" role="search">
-        <input
-      
-          id="input-1"
-          v-model="search"
-          class="search-input"
-          type="search"
-          placeholder="What are you looking for?"
-          aria-label="Search"
-        />
-        <button class="btn-search" type="submit">
-          <i class="material-symbols-outlined">Search</i>
-        </button>
-      </form>
 
-      <div style="margin: 0" class="stellinha" >
-        <div
-          class="movie mb-4 "
-          v-for="movie in movie.results"
-          :key="movie.id"
-          :data-bs-target="'#exampleModalToggle-' + movie.id"
-        >
-          <img
-            v-if="movie.poster_path"
-            :data-bs-target="'#exampleModalToggle-' + movie.id"
-            data-bs-toggle="modal"
-            class="card-poster"
-            :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
-            alt="Movie Poster"
-          />
-        </div>
-      </div>
-    </div>
-
-
-    <div
-      v-for="movie in movie.results"
-      :key="movie.id"
-      class="modal fade"
-      :id="'exampleModalToggle-' + movie.id"
-      aria-hidden="true"
-      :aria-labelledby="'exampleModalToggleLabel-' + movie.id"
-      tabindex="-1"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1
-              class="modal-title fs-5"
-              :id="'exampleModalToggleLabel-' + movie.id"
-            >
-              {{ movie.title }}
-            </h1>
-
-<!-- tella -->
-<!-- <FavoriteComponent /> -->
-        <span
-              v-if="!isClicked"
-              class="btn-favorite"
-              type="button"
-              @click="addToFavorites(movie)"
-            >
-              <img
-                src="../assets/favorite.svg"
-                alt="icon favorite background"
-              />
-            </span>
-
-            <span v-else>
-              <svg
-                style="cursor: pointer"
-                id="heart-svg"
-                height="40"
-                width="40"
-                viewBox="467 392 58 57"
-                xmlns="http://www.w3.org/2000/svg"
-                @click="removeFromFavorites(movie)"
-              >
-                <g
-                  id="Group"
-                  fill-rule="evenodd"
-                  transform="translate(467 392)"
-                >
-                  <path
-                    d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z"
-                    id="heart"
-                    fill="red"
-                  />
-                </g>
-              </svg>
-            </span>
-
-            <button
-              type="button"
-              class="icon-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            >
-              <i class="material-symbols-outlined">close</i>
-     </button>  
-   <!-- //stella  -->
-          </div>
- 
-          <div class="modal-body">
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="3000">
             <img
-              class="img-modal"
+              src="../assets/got.webp"
+              class="carousel-img-desktop carousel-img"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item active" data-bs-interval="3000">
+            <img
+              src="../assets/tlou.jpg"
+              class="carousel-img-desktop carousel-img"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item active" data-bs-interval="3000">
+            <img
+              src="../assets/succession.jpeg"
+              class="carousel-img-desktop carousel-img"
+              alt="..."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <form
+          style="padding-top: 30px"
+          class="d-flex"
+          @submit.prevent="getMovie"
+          role="search"
+        >
+          <input
+            id="input-1"
+            v-model="search"
+            class="search-input"
+            type="search"
+            placeholder="What are you looking for?"
+            aria-label="Search"
+          />
+          <button class="btn-search" type="submit">
+            <i class="material-symbols-outlined">Search</i>
+          </button>
+        </form>
+
+        <div style="margin: 0" class="row">
+          <div
+            class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 movie mb-4"
+            v-for="movie in movieList"
+            :key="movie.id"
+            :data-bs-target="'#exampleModalToggle-' + movie.id"
+          >
+            <img
+              v-if="movie.poster_path"
+              :data-bs-target="'#exampleModalToggle-' + movie.id"
+              data-bs-toggle="modal"
+              class="card-poster"
               :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
               alt="Movie Poster"
             />
-            <div class="content-details">
-              <span v-if="movie.adult" class="information"
-                >Content:
-                <p class="information films">Adult</p></span
-              >
-              <span v-else class="information"
-                >Content:
-                <p class="information films">Not Adult</p></span
-              >
+          </div>
+        </div>
+      </div>
 
-              <span class="information"
-                >Language:
-                <p class="information films">
-                  {{ movie.original_language }}
-                </p></span
+      <div
+        v-for="movie in movieList"
+        :key="movie.id"
+        class="modal fade"
+        :id="'exampleModalToggle-' + movie.id"
+        aria-hidden="true"
+        :aria-labelledby="'exampleModalToggleLabel-' + movie.id"
+        tabindex="-1"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1
+                class="modal-title fs-5"
+                :id="'exampleModalToggleLabel-' + movie.id"
               >
-              <span class="information"
-                >Release date:
-                <p class="information films">{{ movie.release_date }}</p></span
+                {{ movie.title }}
+              </h1>
+
+              <Favorite />
+
+              <button
+                type="button"
+                class="icon-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
               >
-              <span class="information">
-                Vote average:
-                <p class="information films">{{ movie.vote_average }}</p>
-              </span>
-              <span class="information"
-                >Vote count:
-                <p class="information films">{{ movie.vote_count }}</p></span
-              >
-              <span class="information">Overview:</span>
-              <p class="information overview">{{ movie.overview }}</p>
+                <i class="material-symbols-outlined">close</i>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <img
+                class="img-modal"
+                :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+                alt="Movie Poster"
+              />
+              <div class="content-details">
+                <span v-if="movie.adult" class="information"
+                  >Content:
+                  <p class="information films">Adult</p></span
+                >
+                <span v-else class="information"
+                  >Content:
+                  <p class="information films">Not Adult</p></span
+                >
+
+                <span class="information"
+                  >Language:
+                  <p class="information films">
+                    {{ movie.original_language }}
+                  </p></span
+                >
+                <span class="information"
+                  >Release date:
+                  <p class="information films">
+                    {{ movie.release_date }}
+                  </p></span
+                >
+                <span class="information">
+                  Vote average:
+                  <p class="information films">{{ movie.vote_average }}</p>
+                </span>
+                <span class="information"
+                  >Vote count:
+                  <p class="information films">{{ movie.vote_count }}</p></span
+                >
+                <span class="information">Overview:</span>
+                <p class="information overview">{{ movie.overview }}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- {{ movie.results }}  -->
   </div>
-</div>
 </template>
 
 <script>
-
 import NavBar from "@/components/NavBar.vue";
-// import FavoriteComponent from "@/components/FavoriteComponent.vue";
+import Favorite from "@/components/Favorite.vue";
 import axios from "axios";
 
 export default {
@@ -217,14 +189,12 @@ export default {
     return {
       search: "",
       isClicked: false,
-      movie: {
-        adult: true,
-        posterPath: false,
-      },
+      movieList: [],
     };
   },
   components: {
     NavBar,
+    Favorite,
   },
 
   methods: {
@@ -236,49 +206,20 @@ export default {
         )
 
         .then((res) => {
-          this.movie = res.data;
-          this.search = "";
-          
+          this.movieList = res.data.results;
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    addToFavorites(movie) {
-      //criar variavel
-      // Obtém a lista de favoritos do LocalStorage ou inicializa como um array vazio
-      let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      // verifica se o filme já está na lista de favoritos
-      const existingMovie = favorites.find(
-        (favMovie) => favMovie.id === movie.id
-      );
-      //se existe, retorna
-      if (existingMovie) {
-        return;
-      }
-      // Adiciona o filme à lista de favoritos
-      favorites.push(movie);
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-      this.isClicked = !this.isClicked;
-      // Adicionar lógica aqui para adicionar ou remover dos favoritos
-    },
-    removeFromFavorites(movie) {
-      this.isClicked = false;
-      // Lógica para remover dos favoritos
-      // Exemplo: Remover do localStorage
-      const favorites = JSON.parse(localStorage.getItem("favorites"));
-      const updatedFavorites = favorites.filter((fav) => fav.id !== movie.id);
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-    },
   },
 };
 </script>
 <style lang="scss" scoped>
-.home,
-.stellinha {
+.container-app {
   background-image: linear-gradient(to right bottom, #030328 60%, #5c0b5b 170%);
-
 }
+
 .button-one,
 .button-two,
 .button-three {
@@ -286,14 +227,6 @@ export default {
   height: 15px;
   width: 15px;
 }
-.carousel-item {
-  height: 100%;
-}
-// @media screen and (max-width: 768px) {
-//   .carousel-img-desktop {
-//     /* display: none; */
-//   }
-// }
 
 .search-input {
   outline: none;
@@ -329,7 +262,8 @@ export default {
 }
 
 .movie {
-  display: contents;
+  display: flex;
+  justify-content: center;
 }
 .modal-content {
   background-color: rgb(16 16 15);
@@ -345,21 +279,20 @@ export default {
 }
 .modal-footer {
   border: none;
-  // justify-content: center;
 }
 .modal-body {
   color: white;
   text-align: start;
   padding: 25px;
 }
- .icon-close {
-   color: white;
-   border: none;
-   background-color: rgba(255, 0, 0, 0);
-   top: 8px;
-   right: 4px;
-   position: absolute;
- }
+.icon-close {
+  color: white;
+  border: none;
+  background-color: rgba(255, 0, 0, 0);
+  top: 8px;
+  right: 4px;
+  position: absolute;
+}
 .img-modal {
   width: 100%;
 }
@@ -379,38 +312,50 @@ export default {
   }
 }
 
-@media screen and (max-width: 480px) {
+.carousel-img {
+  width: 100%;
+}
+@media screen and (max-width: 320px) {
+  .search-input {
+    padding: 20px 5px 20px 10px;
+  }
   .search-input::placeholder {
-    font-size: 17px;
+    font-size: 14px;
   }
 }
 
-// @media screen and (min-width: 481px) and (max-width: 768px) {
-//   .search-input::placeholder {
-//   }
-//   .stellinha{
-//   height: 100%;
-// }
-// }
-
-// @media screen and  (min-width: 769px) and (max-width: 1600px) {
-// .stellinha{
-//   height: 90vh;
-// }
-// }
-
-
-.icon-favorite {
-  background: linear-gradient(to right, #2d50cf, #732be7);
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .search-input {
+    padding: 20px 5px 20px 10px;
+  }
+  .search-input::placeholder {
+    font-size: 18px;
+  }
 }
-.icon-favorite:hover {
-  background: linear-gradient(to right, #2d50cf, #732be7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  padding-left: 10px;
-  cursor: pointer;
+@media screen and (min-width: 1025px) and (max-width: 1400px) {
+  .card-poster {
+    width: 238px;
+    height: 276px;
+  }
 }
+
+@media screen and (min-width: 1401px) {
+  .movie {
+    display: contents !important;
+  }
+  .card-poster {
+    width: 250px;
+    height: 276px;
+  }
+  .container-app {
+    justify-content: center;
+  }
+  .carousel-img {
+    width: 100%;
+    height: 750px;
+  }
+}
+
 //heart
 #heart-svg {
   transform-origin: center;
@@ -424,7 +369,5 @@ export default {
   100% {
     transform: scale(1);
   }
-
 }
 </style>
-
