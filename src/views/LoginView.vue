@@ -9,7 +9,7 @@
     <div class="content-login">
       <div class="container-login">
         <div>
-          <h2 class="question-account">Você tem uma conta?</h2>
+          <h2 class="question-account">Do you have an account?</h2>
         </div>
         <form class="form">
           <div>
@@ -73,8 +73,8 @@
             </button>
           </div>
           <div class="modal-body">
-            Digite o e-mail que você usou no the movies,e enviaremos a você um
-            link para redefinir a sua senha.
+            Enter the email you used on the movies, and we'll send you an
+            link to reset your password.
           </div>
 
           <form class="form">
@@ -136,7 +136,7 @@
             </button>
           </div>
           <div class="modal-body">
-            Procure o e-mail de redefinição de senha na caixa de entrada.
+            Look for the password reset email in your inbox.
           </div>
           <div class="modal-footer">
             <button
@@ -255,7 +255,6 @@ export default {
   height: 50px;
   width: 100%;
   font-weight: bold;
-  
 }
 
 .container-login {
@@ -264,9 +263,8 @@ export default {
   border-radius: 10px;
 }
 .modal-footer {
- 
-    padding: 0;
-  }
+  padding: 0;
+}
 @media screen and (max-width: 480px) {
   .container-login {
     background-color: rgba(255, 0, 0, 0) !important;
@@ -291,11 +289,9 @@ export default {
     justify-content: center;
     padding: 0;
   }
-
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
- 
   .container-login {
     background-color: rgba(255, 0, 0, 0) !important;
     padding: 20px;
@@ -318,7 +314,6 @@ export default {
   }
 }
 @media screen and (min-width: 769px) and (max-width: 1024px) {
-
 }
 @media screen and (min-width: 1025px) and (max-width: 1200px) {
 }
@@ -366,7 +361,6 @@ export default {
     background-color: white;
     font-weight: bold;
     text-transform: uppercase;
-   
   }
 }
 </style>
