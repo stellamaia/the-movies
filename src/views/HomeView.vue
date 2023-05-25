@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container-app "
+    class="container-app"
     :style="!movieList.length ? { height: '100vh' } : { height: '100%' }"
   >
     <div>
@@ -38,25 +38,13 @@
 
         <div class="carousel-inner">
           <div class="carousel-item active" data-bs-interval="3000">
-            <img
-              src="../assets/got.webp"
-              class="carousel-img-desktop carousel-img"
-              alt="..."
-            />
+            <div class="got"></div>
           </div>
-          <div class="carousel-item active" data-bs-interval="3000">
-            <img
-              src="../assets/tlou.jpg"
-              class="carousel-img-desktop carousel-img"
-              alt="..."
-            />
+          <div class="carousel-item" data-bs-interval="3000">
+            <div class="tlou"></div>
           </div>
-          <div class="carousel-item active" data-bs-interval="3000">
-            <img
-              src="../assets/succession.jpeg"
-              class="carousel-img-desktop carousel-img"
-              alt="..."
-            />
+          <div class="carousel-item" data-bs-interval="3000">
+            <div class="succession"></div>
           </div>
         </div>
       </div>
@@ -81,9 +69,9 @@
           </button>
         </form>
 
-        <div style="margin: 0" class="row">
+        <div class="row content-list-movie">
           <div
-            class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 movie mb-4"
+            class="col-6 movie mb-4"
             v-for="movie in movieList"
             :key="movie.id"
             :data-bs-target="'#exampleModalToggle-' + movie.id"
@@ -113,13 +101,13 @@
           <div class="modal-content">
             <div class="modal-header">
               <h1
-                class="modal-title fs-5"
+                class="modal-title"
                 :id="'exampleModalToggleLabel-' + movie.id"
               >
                 {{ movie.title }}
               </h1>
 
-              <Favorite />
+              <Favorite :movie="movie" />
 
               <button
                 type="button"
@@ -138,6 +126,17 @@
                 alt="Movie Poster"
               />
               <div class="content-details">
+                <div class="content-assessment">
+                  <span
+                    :style="selectedStar >= star ? { color: 'orange' } : {}"
+                    v-for="star in stars"
+                    :key="star"
+                    @click="rateMovie(star)"
+                    class="material-symbols-outlined content-assessment assessment"
+                  >
+                    star
+                  </span>
+                </div>
                 <span v-if="movie.adult" class="information"
                   >Content:
                   <p class="information films">Adult</p></span
@@ -190,6 +189,8 @@ export default {
       search: "",
       isClicked: false,
       movieList: [],
+      stars: [1, 2, 3, 4, 5],
+      selectedStar: 0,
     };
   },
   components: {
@@ -212,6 +213,11 @@ export default {
           console.log(error);
         });
     },
+    rateMovie(star) {
+      this.selectedStar = star;
+
+      localStorage.setItem("selectedStar", this.selectedStar);
+    },
   },
 };
 </script>
@@ -224,8 +230,8 @@ export default {
 .button-two,
 .button-three {
   border-radius: 50%;
-  height: 15px;
-  width: 15px;
+  height: 10px;
+  width: 10px;
 }
 
 .search-input {
@@ -261,16 +267,14 @@ export default {
   cursor: pointer;
 }
 
-.movie {
-  display: flex;
-  justify-content: center;
-}
 .modal-content {
   background-color: rgb(16 16 15);
 }
 .modal-title {
   color: white;
   text-align: center;
+  font-size: 20px;
+  padding: 0 10px 0 10px;
 }
 .modal-header {
   border: none;
@@ -315,6 +319,13 @@ export default {
 .carousel-img {
   width: 100%;
 }
+.content-list-movie {
+  margin: 0;
+  justify-content: center;
+}
+.movie {
+  display: contents !important;
+}
 @media screen and (max-width: 320px) {
   .search-input {
     padding: 20px 5px 20px 10px;
@@ -340,9 +351,6 @@ export default {
 }
 
 @media screen and (min-width: 1401px) {
-  .movie {
-    display: contents !important;
-  }
   .card-poster {
     width: 250px;
     height: 276px;
@@ -369,5 +377,52 @@ export default {
   100% {
     transform: scale(1);
   }
+}
+.content-assessment {
+  cursor: pointer;
+  justify-content: end;
+  display: flex;
+  &.assessment {
+    color: #636363;
+    margin: 5px;
+  }
+}
+.carousel-item .got {
+  height: 70vh;
+  min-height: 350px;
+  background: url("../assets/got.webp") no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  object-fit: cover !important;
+
+  background-position-y: 16%;
+}
+
+.carousel-item .tlou {
+  height: 70vh;
+  min-height: 350px;
+  background: url("../assets/tlou.jpg") no-repeat scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  object-fit: cover !important;
+
+  background-position-y: 16%;
+}
+
+.carousel-item .succession {
+  height: 70vh;
+  min-height: 350px;
+  background: url("../assets/succession.jpeg") no-repeat scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  object-fit: cover !important;
+
+  background-position-y: 16%;
 }
 </style>
