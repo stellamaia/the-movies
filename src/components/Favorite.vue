@@ -1,7 +1,7 @@
 <template>
   <div>
     <span
-      v-if="!isClicked"
+      v-if="!isFavorite"
       class="btn-favorite"
       type="button"
       @click="addToFavorites(movie)"
@@ -40,19 +40,22 @@
 </template> 
 
 <script>
-
-
 export default {
   name: "FavoriteComponent",
   data() {
     return {
-      isClicked: false,
+      isFavorite: false,
       favorites: [],
-      movieList: []
+      movieList: [],
     };
   },
+  props: {
+    movie: Object,
+  },
+  created() {
+    this.verifyFavorites();
+  },
   methods: {
-   
     showFavorites() {
       //Obtém a lista de favoritos do LocalStorage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -61,11 +64,12 @@ export default {
     },
     addToFavorites(movie) {
       //criar variavel
+
       // Obtém a lista de favoritos do LocalStorage ou inicializa como um array vazio
-      let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       // verifica se o filme já está na lista de favoritos
       const existingMovie = favorites.find(
-        (favMovie) => favMovie.id === movie.id
+        (favMovie) => favMovie?.id === movie?.id
       );
       //se existe, retorna
       if (existingMovie) {
@@ -74,16 +78,25 @@ export default {
       // Adiciona o filme à lista de favoritos
       favorites.push(movie);
       localStorage.setItem("favorites", JSON.stringify(favorites));
-      this.isClicked = !this.isClicked;
+      this.isFavorite = !this.isFavorite;
       // Adicionar lógica aqui para adicionar ou remover dos favoritos
     },
     removeFromFavorites(movie) {
-      this.isClicked = false;
+      this.isFavorite = false;
       // Lógica para remover dos favoritos
       // Exemplo: Remover do localStorage
       const favorites = JSON.parse(localStorage.getItem("favorites"));
-      const updatedFavorites = favorites.filter((fav) => fav.id !== movie.id);
+      const updatedFavorites = favorites.filter((fav) => fav?.id !== movie?.id);
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    },
+    verifyFavorites() {
+      const favorites = JSON.parse(localStorage.getItem("favorites"));
+      const existingMovie = favorites.find(
+        (favMovie) => favMovie?.id === this.movie?.id
+      );
+      if (existingMovie) {
+        this.isFavorite = true;
+      }
     },
   },
 };

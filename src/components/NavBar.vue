@@ -27,7 +27,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="offcanvas-body">
+        <div v-if="favorites.length > 0" class="offcanvas-body">
           <p class="title-favorite">Favorites</p>
 
           <ul class="navbar-nav justify-content-end flex-grow-1">
@@ -45,6 +45,9 @@
               />
             </li>
           </ul>
+        </div>
+        <div v-else>
+          <p class="title-favorite">No Favorites</p>
         </div>
       </div>
 
