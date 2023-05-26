@@ -18,7 +18,7 @@
               class="form-control-email"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
-              placeholder="Endereço de e-mail"
+              placeholder="E-mail"
             />
           </div>
           <div>
@@ -61,7 +61,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
-              Redefinir Senha
+              Reset Password
             </h1>
             <button
               type="button"
@@ -73,8 +73,8 @@
             </button>
           </div>
           <div class="modal-body">
-            Enter the email you used on the movies, and we'll send you an
-            link to reset your password.
+            Enter the email you used on the movies, and we'll send you an link
+            to reset your password.
           </div>
 
           <form class="form">
@@ -84,7 +84,7 @@
                 class="form-control-email"
                 id="exampleInputEmail2"
                 aria-describedby="emailHelp"
-                placeholder="Endereço de e-mail"
+                placeholder="E-mail"
               />
             </div>
           </form>
@@ -124,7 +124,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">
-              E-mail enviado
+              E-mail sent
             </h1>
             <button
               type="button"
@@ -313,12 +313,6 @@ export default {
     }
   }
 }
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-}
-@media screen and (min-width: 1025px) and (max-width: 1200px) {
-}
-@media screen and (min-width: 1201px) {
-}
 
 .modal-content {
   background-color: rgb(16 16 15);
@@ -333,7 +327,6 @@ export default {
 }
 .modal-footer {
   border: none;
-  // justify-content: center;
 }
 .modal-body {
   color: white;
