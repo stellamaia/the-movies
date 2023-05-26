@@ -63,7 +63,6 @@ export default {
       // console.log(this.favorites);
     },
     addToFavorites(movie) {
-      //criar variavel
 
       // Obtém a lista de favoritos do LocalStorage ou inicializa como um array vazio
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -71,27 +70,24 @@ export default {
       const existingMovie = favorites.find(
         (favMovie) => favMovie?.id === movie?.id
       );
-      //se existe, retorna
+      
       if (existingMovie) {
         return;
       }
       // Adiciona o filme à lista de favoritos
       favorites.push(movie);
       localStorage.setItem("favorites", JSON.stringify(favorites));
-      this.isFavorite = !this.isFavorite;
-      // Adicionar lógica aqui para adicionar ou remover dos favoritos
+      this.isFavorite = !this.isFavorite; 
     },
     removeFromFavorites(movie) {
       this.isFavorite = false;
-      // Lógica para remover dos favoritos
-      // Exemplo: Remover do localStorage
       const favorites = JSON.parse(localStorage.getItem("favorites"));
       const updatedFavorites = favorites.filter((fav) => fav?.id !== movie?.id);
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     },
     verifyFavorites() {
       const favorites = JSON.parse(localStorage.getItem("favorites"));
-      const existingMovie = favorites.find(
+      const existingMovie = favorites?.find(
         (favMovie) => favMovie?.id === this.movie?.id
       );
       if (existingMovie) {
