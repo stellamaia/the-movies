@@ -22,10 +22,12 @@
         <div class="offcanvas-header">
           <button
             type="button"
-            class="btn-close"
+            class="btn-close-modal"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
-          ></button>
+          >
+        <i class="material-symbols-outlined btn-close-modal close-modal ">close</i>
+        </button>
         </div>
         <div v-if="favorites.length > 0" class="offcanvas-body">
           <p class="title-favorite">Favorites</p>
@@ -63,22 +65,17 @@ import axios from "axios";
 
 export default {
   name: "NavBar",
-
   data() {
     return {
       favorites: [],
       movieList: [],
     };
   },
-  props: {
-    msg: String,
-  },
   methods: {
     showFavorites() {
       //Obtém a lista de favoritos do LocalStorage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       this.favorites = favorites;
-      // console.log(this.favorites);
     },
     getMovie() {
       const apiKey = "c78faf8ccc0cf08a8c233cdb9fc3b51b";
@@ -86,7 +83,6 @@ export default {
         .get(
           `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${this.search}`
         )
-
         .then((res) => {
           this.movieList = res.data.results;
         })
@@ -99,6 +95,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.offcanvas {
+  background-image: linear-gradient(to right bottom, #030328 60%, #5c0b5b 170%);
+  color: white;
+}
 .nav-bar-component {
   background-color: #030328;
 }
@@ -133,10 +133,25 @@ export default {
   margin: 0;
 }
 .card-poster-favorite {
+  padding-bottom: 20px;
   width: 60%;
 }
 .offcanvas.offcanvas-start {
   width: 20%;
+}
+.offcanvas-header{
+  display: flex;
+  justify-content: end;
+}
+.btn-close-modal{
+  background-color: rgba(191, 191, 191, 0);
+  border: none;
+
+ 
+&.close-modal{
+  color: white;
+
+}
 }
 @media screen and (max-width: 480px) {
   .offcanvas.offcanvas-start {
@@ -167,8 +182,5 @@ export default {
     width: 100%;
   }
 }
-@media screen and (min-width: 1025px) and (max-width: 1200px) {
-}
-@media screen and (min-width: 1201px) {
-}
+
 </style>
