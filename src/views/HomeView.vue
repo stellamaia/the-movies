@@ -8,7 +8,7 @@
 
       <div
         id="carouselExampleInterval"
-        class="carousel slide"
+        class="carousel slide d-none d-lg-block "
         data-bs-ride="carousel"
       >
         <div class="carousel-indicators">
@@ -49,6 +49,60 @@
         </div>
       </div>
 
+      <div
+        id="carouselExampleInterval-2"
+        class="carousel slide d-lg-none"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#carouselExampleInterval-2"
+            data-bs-slide-to="0"
+            class="active button-one"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleInterval-2"
+            data-bs-slide-to="1"
+            class="button-two"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleInterval-2"
+            data-bs-slide-to="2"
+            class="button-three"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="3000">
+            <img
+              src="../assets/got.webp"
+              class="carousel-img-desktop carousel-img"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item" data-bs-interval="3000">
+            <img
+              src="../assets/tlou.jpg"
+              class="carousel-img-desktop carousel-img"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item" data-bs-interval="3000">
+            <img
+              src="../assets/succession.jpeg"
+              class="carousel-img-desktop carousel-img"
+              alt="..."
+            />
+          </div>
+        </div>
+      </div>
       <div>
         <form
           style="padding-top: 30px"
@@ -72,6 +126,7 @@
         <div class="row content-list-movie">
           <div
             class="col-6 movie mb-4"
+            @click="verifyRatings(movie)"
             v-for="movie in movieList"
             :key="movie.id"
             :data-bs-target="'#exampleModalToggle-' + movie.id"
@@ -107,8 +162,6 @@
                 {{ movie.title }}
               </h1>
 
-              <Favorite :movie="movie" />
-
               <button
                 type="button"
                 class="icon-close"
@@ -118,6 +171,8 @@
                 <i class="material-symbols-outlined">close</i>
               </button>
             </div>
+
+            <div class="favorite"><Favorite :movie="movie" /></div>
 
             <div class="modal-body">
               <img
@@ -131,7 +186,7 @@
                     :style="selectedStar >= star ? { color: 'orange' } : {}"
                     v-for="star in stars"
                     :key="star"
-                    @click="rateMovie(star)"
+                    @click.stop="ratingMovie(star, movie)"
                     class="material-symbols-outlined content-assessment assessment"
                   >
                     star
@@ -191,8 +246,10 @@ export default {
       movieList: [],
       stars: [1, 2, 3, 4, 5],
       selectedStar: 0,
+      selectMovie: null,
     };
   },
+
   components: {
     NavBar,
     Favorite,
@@ -213,10 +270,43 @@ export default {
           console.log(error);
         });
     },
-    rateMovie(star) {
-      this.selectedStar = star;
+    ratingMovie(star, movie) {
+      const ratings = JSON.parse(localStorage.getItem("ratings")) || [];
+      const existingRating = ratings.find(
+        (ratingMovie) => ratingMovie?.id === movie?.id
+      );
 
-      localStorage.setItem("selectedStar", this.selectedStar);
+      if (existingRating) {
+        this.removeFromRatings(movie, star);
+        return;
+      }
+      // Adiciona o filme à lista de avaliações
+      ratings.push({ ...movie, star });
+      localStorage.setItem("ratings", JSON.stringify(ratings));
+      this.selectedStar = star;
+    },
+    removeFromRatings(movie, star) {
+      this.selectedStar = star;
+      const ratings = JSON.parse(localStorage.getItem("ratings"));
+      const updatedRatings = ratings.map((rat) => {
+        if (rat?.id === movie?.id) {
+          rat.star = star;
+          return rat;
+        }
+      });
+      localStorage.setItem("ratings", JSON.stringify(updatedRatings));
+    },
+    verifyRatings(movie) {
+      const ratings = JSON.parse(localStorage.getItem("ratings"));
+      const existingRatings = ratings?.find(
+        (ratingMovie) => ratingMovie?.id === movie?.id
+      );
+
+      if (existingRatings) {
+        this.selectedStar = existingRatings.star;
+      } else {
+        this.selectedStar = 0;
+      }
     },
   },
 };
@@ -225,7 +315,11 @@ export default {
 .container-app {
   background-image: linear-gradient(to right bottom, #030328 60%, #5c0b5b 170%);
 }
-
+.favorite {
+  display: flex;
+  padding-right: 20px;
+  justify-content: end;
+}
 .button-one,
 .button-two,
 .button-three {
@@ -274,7 +368,7 @@ export default {
   color: white;
   text-align: center;
   font-size: 20px;
-  padding: 0 10px 0 10px;
+  padding: 0 15px 10px 15px;
 }
 .modal-header {
   border: none;
@@ -326,43 +420,6 @@ export default {
 .movie {
   display: contents !important;
 }
-@media screen and (max-width: 320px) {
-  .search-input {
-    padding: 20px 5px 20px 10px;
-  }
-  .search-input::placeholder {
-    font-size: 14px;
-  }
-}
-
-@media screen and (min-width: 321px) and (max-width: 480px) {
-  .search-input {
-    padding: 20px 5px 20px 10px;
-  }
-  .search-input::placeholder {
-    font-size: 18px;
-  }
-}
-@media screen and (min-width: 1025px) and (max-width: 1400px) {
-  .card-poster {
-    width: 238px;
-    height: 276px;
-  }
-}
-
-@media screen and (min-width: 1401px) {
-  .card-poster {
-    width: 250px;
-    height: 276px;
-  }
-  .container-app {
-    justify-content: center;
-  }
-  .carousel-img {
-    width: 100%;
-    height: 750px;
-  }
-}
 
 //heart
 #heart-svg {
@@ -388,6 +445,45 @@ export default {
   }
 }
 .carousel-item .got {
+  background: url("../assets/got.webp") no-repeat center center scroll;
+  width: 100%;
+
+  min-height: 350px;
+}
+
+.carousel-item .tlou {
+  width: 100%;
+  min-height: 350px;
+
+  background: url("../assets/tlou.jpg") no-repeat scroll;
+}
+
+.carousel-item .succession {
+  width: 100%;
+  min-height: 350px;
+
+  background: url("../assets/succession.jpeg") no-repeat scroll;
+}
+
+@media screen and (max-width: 320px) {
+  .search-input {
+    padding: 20px 5px 20px 10px;
+  }
+  .search-input::placeholder {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .search-input {
+    padding: 20px 5px 20px 10px;
+  }
+  .search-input::placeholder {
+    font-size: 18px;
+  }
+}
+
+.carousel-item .got {
   height: 70vh;
   min-height: 350px;
   background: url("../assets/got.webp") no-repeat center center scroll;
@@ -396,8 +492,8 @@ export default {
   -o-background-size: cover;
   background-size: cover;
   object-fit: cover !important;
+  background-position-y: 30%;
 
-  background-position-y: 16%;
 }
 
 .carousel-item .tlou {
@@ -410,7 +506,7 @@ export default {
   background-size: cover;
   object-fit: cover !important;
 
-  background-position-y: 16%;
+  background-position-y: 30%;
 }
 
 .carousel-item .succession {
@@ -423,6 +519,26 @@ export default {
   background-size: cover;
   object-fit: cover !important;
 
-  background-position-y: 16%;
+  background-position-y: 40%;
+}
+@media screen and (min-width: 1025px) and (max-width: 1400px) {
+  .card-poster {
+    width: 238px;
+    height: 276px;
+  }
+}
+
+@media screen and (min-width: 1401px) {
+  .card-poster {
+    width: 250px;
+    height: 330px;
+  }
+  .container-app {
+    justify-content: center;
+  }
+  .carousel-img {
+    width: 100%;
+    height: 750px;
+  }
 }
 </style>
