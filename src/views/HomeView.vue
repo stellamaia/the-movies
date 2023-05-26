@@ -331,7 +331,7 @@ export default {
 }
 .search-input {
   outline: none;
-  border-radius: 6px 0 0 6px;
+  border-radius: 6px 0 0 6px!important;
   width: 100%;
   border: none;
   color: white;
@@ -349,7 +349,7 @@ export default {
   border: none;
   color: white;
   height: 64px;
-  border-radius: 0 6px 6px 0;
+  border-radius: 0 6px 6px 0!important;
   width: 130px;
   margin: 20px 20px 0 0;
   background-color: rgba(255, 255, 255, 0.101);
