@@ -138,7 +138,7 @@
           <div class="modal-body">
             Look for the password reset email in your inbox.
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer-btn-ok">
             <button
               class="btn-close-modal white"
               data-bs-dismiss="modal"
@@ -184,7 +184,7 @@ export default {
   margin: 0px;
   display: flex;
   justify-content: center;
-  padding: 50px;
+  padding: 20px 50px 50px 50px;
 }
 .login {
   background-image: linear-gradient(to right bottom, #030328 60%, #5c0b5b 170%);
@@ -199,21 +199,25 @@ export default {
   color: white;
   display: flex;
   justify-content: start;
-  padding-top: 57px;
-  padding-left: 20px;
+  padding-top: 30px;
   padding-bottom: 30px;
 }
-
+.form-control-email {
+  margin-bottom: 30px;
+}
 .form-control-email,
 .form-control-password {
   background-color: rgba(187, 55, 55, 0);
   border: 1.5px solid rgba(193, 193, 193, 0.579);
   color: white;
   padding: 20px;
-  margin-bottom: 30px;
+
   outline: none;
   border-radius: 5px;
   width: 100%;
+}
+.form-control-password {
+  margin-bottom: 0;
 }
 .form-control-email:focus,
 .form-control-password:focus {
@@ -249,21 +253,19 @@ export default {
     cursor: pointer;
   }
 }
-
 .btn-enter-modal,
 .btn-close-modal {
   height: 50px;
   width: 100%;
   font-weight: bold;
 }
-
 .container-login {
   background-color: rgba(221, 221, 221, 0.06);
   padding: 20px;
   border-radius: 10px;
 }
 .modal-footer {
-  padding: 0;
+  padding-left: 10px;
 }
 @media screen and (max-width: 480px) {
   .container-login {
@@ -291,6 +293,11 @@ export default {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .form-control-password {
+    margin-bottom: 30px;
+  }
+}
 @media screen and (min-width: 481px) and (max-width: 768px) {
   .container-login {
     background-color: rgba(255, 0, 0, 0) !important;

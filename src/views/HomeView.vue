@@ -8,7 +8,7 @@
 
       <div
         id="carouselExampleInterval"
-        class="carousel slide d-none d-lg-block "
+        class="carousel slide d-none d-lg-block"
         data-bs-ride="carousel"
       >
         <div class="carousel-indicators">
@@ -262,7 +262,6 @@ export default {
         .get(
           `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${this.search}`
         )
-
         .then((res) => {
           this.movieList = res.data.results;
         })
@@ -271,40 +270,43 @@ export default {
         });
     },
     ratingMovie(star, movie) {
+      // classifição do filme
       const ratings = JSON.parse(localStorage.getItem("ratings")) || [];
       const existingRating = ratings.find(
         (ratingMovie) => ratingMovie?.id === movie?.id
       );
-
       if (existingRating) {
         this.removeFromRatings(movie, star);
         return;
       }
-      // Adiciona o filme à lista de avaliações
       ratings.push({ ...movie, star });
       localStorage.setItem("ratings", JSON.stringify(ratings));
       this.selectedStar = star;
     },
+    
     removeFromRatings(movie, star) {
+      //Remove a classifição do filme
       this.selectedStar = star;
       const ratings = JSON.parse(localStorage.getItem("ratings"));
       const updatedRatings = ratings.map((rat) => {
-        if (rat?.id === movie?.id) {
-          rat.star = star;
+        if (rat?.id === movie?.id) { 
+        rat.star = star;
           return rat;
         }
       });
       localStorage.setItem("ratings", JSON.stringify(updatedRatings));
     },
     verifyRatings(movie) {
+      //verifica as classifição
       const ratings = JSON.parse(localStorage.getItem("ratings"));
       const existingRatings = ratings?.find(
         (ratingMovie) => ratingMovie?.id === movie?.id
       );
-
+      //Se existe, defini a star selecionada, como a star da classifição existente
       if (existingRatings) {
         this.selectedStar = existingRatings.star;
       } else {
+      //senão, defini a star selecionada como 0
         this.selectedStar = 0;
       }
     },
@@ -327,7 +329,6 @@ export default {
   height: 10px;
   width: 10px;
 }
-
 .search-input {
   outline: none;
   border-radius: 6px 0 0 6px;
@@ -447,21 +448,18 @@ export default {
 .carousel-item .got {
   background: url("../assets/got.webp") no-repeat center center scroll;
   width: 100%;
-
   min-height: 350px;
 }
 
 .carousel-item .tlou {
   width: 100%;
   min-height: 350px;
-
   background: url("../assets/tlou.jpg") no-repeat scroll;
 }
 
 .carousel-item .succession {
   width: 100%;
   min-height: 350px;
-
   background: url("../assets/succession.jpeg") no-repeat scroll;
 }
 
@@ -493,7 +491,6 @@ export default {
   background-size: cover;
   object-fit: cover !important;
   background-position-y: 30%;
-
 }
 
 .carousel-item .tlou {
@@ -505,7 +502,6 @@ export default {
   -o-background-size: cover;
   background-size: cover;
   object-fit: cover !important;
-
   background-position-y: 30%;
 }
 
@@ -518,7 +514,6 @@ export default {
   -o-background-size: cover;
   background-size: cover;
   object-fit: cover !important;
-
   background-position-y: 40%;
 }
 @media screen and (min-width: 1025px) and (max-width: 1400px) {

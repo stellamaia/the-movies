@@ -57,24 +57,19 @@ export default {
   },
   methods: {
     showFavorites() {
-      //Obtém a lista de favoritos do LocalStorage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       this.favorites = favorites;
-      // console.log(this.favorites);
     },
     addToFavorites(movie) {
-
-      // Obtém a lista de favoritos do LocalStorage ou inicializa como um array vazio
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      // verifica se o filme já está na lista de favoritos
       const existingMovie = favorites.find(
         (favMovie) => favMovie?.id === movie?.id
       );
-      
+
       if (existingMovie) {
         return;
       }
-      // Adiciona o filme à lista de favoritos
+    
       favorites.push(movie);
       localStorage.setItem("favorites", JSON.stringify(favorites));
       this.isFavorite = !this.isFavorite; 
@@ -105,5 +100,8 @@ export default {
   top: 8px;
   right: 4px;
   position: absolute;
+}
+#heart-svg {
+  cursor: pointer;
 }
 </style>

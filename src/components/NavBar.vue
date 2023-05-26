@@ -26,8 +26,10 @@
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           >
-        <i class="material-symbols-outlined btn-close-modal close-modal ">close</i>
-        </button>
+            <i class="material-symbols-outlined btn-close-modal close-modal"
+              >close</i
+            >
+          </button>
         </div>
         <div v-if="favorites.length > 0" class="offcanvas-body">
           <p class="title-favorite">Favorites</p>
@@ -39,7 +41,6 @@
               :key="favorite.id"
             >
               <p class="favorite-movies-title">{{ favorite.title }}</p>
-              <Favorite />
               <img
                 class="card-poster-favorite"
                 :src="'https://image.tmdb.org/t/p/w500/' + favorite.poster_path"
@@ -62,7 +63,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   name: "NavBar",
   data() {
@@ -73,7 +73,6 @@ export default {
   },
   methods: {
     showFavorites() {
-      //Obtém a lista de favoritos do LocalStorage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       this.favorites = favorites;
     },
@@ -109,7 +108,6 @@ export default {
   color: white;
   font-size: 32px;
 }
-
 .icon {
   background-color: #3d3d4e;
   color: white;
@@ -139,19 +137,16 @@ export default {
 .offcanvas.offcanvas-start {
   width: 20%;
 }
-.offcanvas-header{
+.offcanvas-header {
   display: flex;
   justify-content: end;
 }
-.btn-close-modal{
+.btn-close-modal {
   background-color: rgba(191, 191, 191, 0);
   border: none;
-
- 
-&.close-modal{
-  color: white;
-
-}
+  &.close-modal {
+    color: white;
+  }
 }
 @media screen and (max-width: 480px) {
   .offcanvas.offcanvas-start {
@@ -182,5 +177,4 @@ export default {
     width: 100%;
   }
 }
-
 </style>
