@@ -26,7 +26,7 @@
               type="password"
               class="form-control-password"
               id="exampleInputPassword1"
-              placeholder="senha"
+              placeholder="password"
             />
           </div>
 
